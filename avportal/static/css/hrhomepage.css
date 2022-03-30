@@ -17,11 +17,11 @@ option{
 }
 
 .cards{
-    width: 150px;
+    width: auto;
     margin: auto;
     background-color: rgba(201, 133, 6, 0.815);
     display:inline-block;
-    border-radius: 7px;
+    /* border-radius: 1000px; */
     text-align: center;
 }
 
@@ -54,6 +54,7 @@ option{
     padding: 5px;
     border-radius: 5px;
     cursor: pointer;
+    border-style : None;
 }
 .bt:hover{
     background-color: black;

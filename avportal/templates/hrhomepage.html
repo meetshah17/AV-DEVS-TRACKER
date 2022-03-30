@@ -9,36 +9,40 @@
 {% endblock sidebarextra %}
 
 {% block content %}
+
 <div class="project">
-    <select id="sel"  required>
-        <option disabled selected hidden>Select Project Name...</option>
-        <option value = '10'>roadhow</option>
-        <option value = '20'>clara</option>
-        <option value = '15' >avdevs</option>
-        <option value = '7'>streetai</option>
-        <option value = '4'>9tofive</option>
-    </select>
+    <form action='{% url 'hrhomepage' %}' method="POST" >
+        {% csrf_token %}
+            <select class="selectpicker search-fields" name="selected_project">
+                <option disabled="disabled" selected="selected">Select Project</option>
+                {% for selected_project in project_search  %}
+                    <option value="{{selected_project}}" name="selected_project">{{selected_project}}</option>
+                    
+                {% endfor %}
+            </select>
+            <a href="{% url 'hrhomepage' %}"><button>submit</button></a>
+    </form>
 </div><br><br><br>
 
-<div class="cont">
-    
-</div>
-{% comment %} <h1>{{emp_count}}</h1> {% endcomment %}
-
-{% for person in emp.0 %}
+{% comment %} <h1>{{project_search}}</h1> {% endcomment %}
+{% comment %} {% if selected_value %} {% endcomment %}
+{% for person in sel_project%}
+    {% comment %} <h3> {{person.first_name}}</h3> {% endcomment %}
     <div class="cards">
         <div class="image">
-            <img src="static/imgs/face.jpg" alt="">
+            <img src="{{person.photos.url}}" alt="">
         </div>
         <div class="title">
-            <p>{{person.emp_name}}</p>
+            <p> Emp Name: {{person.first_name}} {{person.last_name}}</p>
         </div>
         <div class="des">
-            <p>{{person.emp_id}}</p>
-            <a href="#"><button>Read More...</button></a>
+            <p>Emp ID: {{person.emp_id}}</p>
+            <a href="#" class="bt">Read More...</a>
         </div>
     </div>
 {% endfor %}
+{% comment %} {% endif %} {% endcomment %}
+{% comment %} {% endif %} {% endcomment %}
 {% endblock content %}
 
 {% block body %}

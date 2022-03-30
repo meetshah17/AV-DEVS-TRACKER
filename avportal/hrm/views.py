@@ -1,7 +1,7 @@
 from multiprocessing import context
 from unicodedata import name
 from django.shortcuts import render, HttpResponse
-from emp.models import Emp
+from .models import Detail
 
 # Create your views here.
 
@@ -21,35 +21,23 @@ def userhomepage(request) :
     return render(request, 'userhomepage.html')
 
 def hrhomepage(request):
-    roadhow = Emp.objects.all().filter(project='roadhow')
-    avdevs = Emp.objects.all().filter(project='avdevs')
-    clara = Emp.objects.all().filter(project='clara')
-    streetai = Emp.objects.all().filter(project='streetai')
-    ninetofive = Emp.objects.all().filter(project='9tofive')
-    
-    emp = {'0': roadhow, '1': clara,'2': avdevs, '3':streetai,'4': ninetofive }
-    # emp_count = roadhow.count()
-    
+    selected_value = None
+    sel_project = None
+    # detail = Detail.objects.all()
+    project_search = Detail.objects.values_list('project',flat=True).distinct()
+
+    if request.method == 'POST':
+        selected_value = request.POST.get('selected_project')
+        print(selected_value)
+        sel_project = Detail.objects.filter(project__iexact = selected_value)
+        print(sel_project)
+       
     context = {
-        'emp' : emp,
-        # 'emp_count' : emp_count,
-    }
-    return render(request, 'hrhomepage.html', context)
-    
-# def Emp_detail(request):
-#     emp = Emp.objects.all().filter(project='roadhow')
-#     avdevs = Emp.objects.all().filter(project='avdevs')
-#     clara = Emp.objects.all().filter(project='clara')
-#     streetai = Emp.objects.all().filter(project='streetai')
-    
-#     # emp = [roadhow, avtracker, clara, streetai ]
-#     # emp_count = emp.count()
-    
-#     context = {
-#         'emp' : emp,
-#         'emp_count' : emp_count,
-#     }
-#     return render(request, 'hrhomepage.html' , context)
+        'project_search': project_search,
+        'selected_value' : selected_value,
+        'sel_project': sel_project,
+        }
+    return render(request, 'hrhomepage.html' , context)
     
 def contentpage(request) :
     return render(request, 'contentpage.html')

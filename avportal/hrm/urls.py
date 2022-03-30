@@ -11,6 +11,4 @@ urlpatterns = [
     path('hrhomepage', views.hrhomepage, name='hrhomepage'),
     path('userhomepage', views.userhomepage, name='userhomepage'),
     path('contentpage', views.contentpage, name='contentpage'),
-    # path('hrhomepage', views.Emp_detail, name='empdetail'),
-
 ]
